@@ -23,13 +23,13 @@
 <meta property="og:site_name" content="强哥的博客">
 <meta property="og:description" content="小强学Python+OpenCV之－1.0开篇写在前面：有没有想过使用Python + OpenCV来实现人脸识别？想想就有点小兴奋吧。小强也是不久前才了解到可以使用Python + OpenCV进行图像处理。觉得有趣就想学习一下。在这里，把我学到的小知识记录一下，也为了自己以后方便查看。也希望有相同兴趣的同学搭个伴，一起学习。更希望得到大牛们的指点和鼓励。 完成此课后，我设置的终极目标有下面几个">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/2024/01/13/%E5%B0%8F%E5%BC%BA%E5%AD%A6Python-OpenCV%E4%B9%8B%EF%BC%8D1-0%E5%BC%80%E7%AF%87/messi1.jpg">
-<meta property="og:image" content="http://example.com/2024/01/13/%E5%B0%8F%E5%BC%BA%E5%AD%A6Python-OpenCV%E4%B9%8B%EF%BC%8D1-0%E5%BC%80%E7%AF%87/messi2.jpg">
+<meta property="og:image" content="http://example.com/messi1.jpg">
+<meta property="og:image" content="http://example.com/messi2.jpg">
 <meta property="article:published_time" content="2024-01-13T09:38:33.000Z">
-<meta property="article:modified_time" content="2024-01-13T09:44:07.449Z">
+<meta property="article:modified_time" content="2024-01-13T09:45:55.012Z">
 <meta property="article:author" content="强哥">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/2024/01/13/%E5%B0%8F%E5%BC%BA%E5%AD%A6Python-OpenCV%E4%B9%8B%EF%BC%8D1-0%E5%BC%80%E7%AF%87/messi1.jpg">
+<meta name="twitter:image" content="http://example.com/messi1.jpg">
   
   
   
@@ -337,12 +337,10 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 导入opencv库</span><br><span class="hljs-keyword">import</span> cv2<br> <br><span class="hljs-comment"># 加载图像</span><br>image = cv2.imread(<span class="hljs-string">&quot;messi.jpg&quot;</span>)<br> <br><span class="hljs-comment"># 显示我们的原始图像到屏幕上</span><br>cv2.imshow(<span class="hljs-string">&quot;Faces&quot;</span>, image)<br> <br><span class="hljs-comment"># 等待键盘输出</span><br>cv2.waitKey(<span class="hljs-number">0</span>)<br> <br><span class="hljs-comment"># 将图像转成灰度图像</span><br>gray = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)<br> <br><span class="hljs-comment"># 加载人脸分类检测器（这个分类检测器可以在opencv的安装路径xxx/OpenCV/haarcascade下找到）</span><br>detector =cv2.CascadeClassifier(<span class="hljs-string">&quot;haarcascade_frontalface_default.xml&quot;</span>)<br> <br><span class="hljs-comment"># 识别人脸，得到人脸所在的矩形区域（可能会得到多个人脸，所以这里是一个list）</span><br>rects = detector.detectMultiScale(gray,scaleFactor=<span class="hljs-number">1.05</span>, minNeighbors=<span class="hljs-number">7</span>,<br>         minSize=(<span class="hljs-number">30</span>,<span class="hljs-number">30</span>), flags=cv2.cv.CV_HAAR_SCALE_IMAGE)<br> <br><span class="hljs-comment"># 遍历list中每个识别到的人脸区域，并在原始图像上沿该区域的边界画一个颜色为绿色、线宽为2个像素的边框</span><br><span class="hljs-keyword">for</span> (x, y, w, h) <span class="hljs-keyword">in</span> rects:<br>         cv2.rectangle(image,(x, y), (x + w, y + h), (<span class="hljs-number">0</span>, <span class="hljs-number">255</span>, <span class="hljs-number">0</span>), <span class="hljs-number">2</span>)<br> <br><span class="hljs-comment"># 将图像显示在屏幕上，</span><br>cv2.imshow(<span class="hljs-string">&quot;Faces&quot;</span>, image)<br> <br><span class="hljs-comment"># 等待键盘输出</span><br>cv2.waitKey(<span class="hljs-number">0</span>)<br></code></pre></td></tr></table></figure>
 
 <p>保存之后，在终端中执行python detect_faces.py<br>首先显示的是我们的原始图像。</p>
-<img src="/2024/01/13/%E5%B0%8F%E5%BC%BA%E5%AD%A6Python-OpenCV%E4%B9%8B%EF%BC%8D1-0%E5%BC%80%E7%AF%87/messi1.jpg" srcset="/img/loading.gif" lazyload class="">
-
+<p><img src="/messi1.jpg" srcset="/img/loading.gif" lazyload alt="图片引用方法二"></p>
 <p>此时，按上键盘上的任意按键。</p>
 <p>奇迹发生了。人脸识别出来了。</p>
-<img src="/2024/01/13/%E5%B0%8F%E5%BC%BA%E5%AD%A6Python-OpenCV%E4%B9%8B%EF%BC%8D1-0%E5%BC%80%E7%AF%87/messi2.jpg" srcset="/img/loading.gif" lazyload class="">
-
+<p><img src="/messi2.jpg" srcset="/img/loading.gif" lazyload alt="图片引用方法二"></p>
 <p>是不是觉得很有趣？</p>
 <p>话说回来。我们的路还长。这里只是给大家一个印象－好玩儿。毕竟兴趣才是最好的老师。</p>
 <p>下面我会按部就班，完成以下内容（会慢慢补充）：</p>
