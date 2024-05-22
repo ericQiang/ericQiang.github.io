@@ -4,6 +4,19 @@
   
   
   <entry>
+    <title>MBR与GPT分区</title>
+    <link href="/2024/05/22/MBR%E4%B8%8EGPT%E5%88%86%E5%8C%BA/"/>
+    <url>/2024/05/22/MBR%E4%B8%8EGPT%E5%88%86%E5%8C%BA/</url>
+    
+    <content type="html"><![CDATA[<h1 id="MBR与GPT分区"><a href="#MBR与GPT分区" class="headerlink" title="MBR与GPT分区"></a>MBR与GPT分区</h1><p>在调试STM32MP135通过SD启动裸机程序时，ROM引导程序会先检查SD卡是否是GPT分区。故了解了一下。</p><p><strong>MBR</strong>（Master Boot Record）位于磁盘的第一个扇区，总大小为512字节。下面是这512字节的详细分布及每个字节的含义：</p><ol><li><strong>主引导程序（Bootstrap Code）</strong>：<ul><li>字节 0-445：<ul><li>这446字节的区域用于存放主引导程序代码，负责初始化硬件、定位并加载操作系统的引导程序。（通常是默认的引导代码或留空）</li></ul></li></ul></li><li><strong>分区表（Partition Table）</strong>：<ul><li>字节 446-509：<ul><li>共有4个分区条目，每个条目16字节，共64字节。每个分区条目结构如下：<ul><li>字节 0：引导标志（Boot Indicator）<ul><li>0x80 表示活动分区</li><li>0x00 表示非活动分区</li></ul></li><li>字节 1-3：起始CHS地址（Starting CHS Address）<ul><li>起始柱面（Cylinder）、磁头（Head）、扇区（Sector）地址，用于兼容性表示分区的起始位置</li></ul></li><li>字节 4：分区类型（Partition Type）<ul><li>标识分区类型，例如0x07（NTFS），0x0B（FAT32），<strong>0xEE(GPT)</strong></li></ul></li><li>字节 5-7：结束CHS地址（Ending CHS Address）<ul><li>结束柱面、磁头、扇区地址，用于兼容性表示分区的结束位置</li></ul></li><li>字节 8-11：起始LBA地址（Starting LBA Address）<ul><li>使用逻辑块地址（LBA）表示分区的起始位置</li></ul></li><li>字节 12-15：分区大小（Size in Sectors）<ul><li>分区的总扇区数</li></ul></li></ul></li></ul></li></ul></li><li><strong>签名字段（Signature Field）</strong>：<ul><li>字节 510-511：<ul><li>固定值0x55AA，表示这是一个有效的MBR。如果这个签名不正确，系统通常会认为MBR损坏，无法正常引导。</li></ul></li></ul></li></ol><p>总结一下MBR的512字节详细结构：</p><ul><li><strong>字节 0-445</strong>：主引导程序代码（Bootstrap Code）</li><li><strong>字节 446-461</strong>：分区1的分区表条目</li><li><strong>字节 462-477</strong>：分区2的分区表条目</li><li><strong>字节 478-493</strong>：分区3的分区表条目</li><li><strong>字节 494-509</strong>：分区4的分区表条目</li><li><strong>字节 510-511</strong>：签名字段（0x55AA）</li></ul><p>具体来说，每个分区条目16字节的结构如下：</p><ul><li><strong>字节 0</strong>：引导标志（Boot Indicator）</li><li><strong>字节 1-3</strong>：起始CHS地址（Starting CHS Address）</li><li><strong>字节 4</strong>：分区类型（Partition Type）</li><li><strong>字节 5-7</strong>：结束CHS地址（Ending CHS Address）</li><li><strong>字节 8-11</strong>：起始LBA地址（Starting LBA Address）</li><li><strong>字节 12-15</strong>：分区大小（Size in Sectors）</li></ul><p>这些信息共同构成了MBR，帮助计算机识别和加载硬盘上的分区及其内容。</p><p>如果MBR分区表中的字节4（分区类型）为0xEE，这表示该分区是一个保护性MBR（Protective MBR），用于标识GPT（GUID Partition Table）分区。这是为了兼容旧系统和工具，它们可能无法识别GPT分区，但仍能够检测到磁盘的存在并避免破坏GPT分区表。</p><p>当MBR的分区类型为0xEE时，具体情况如下：</p><ol><li>保护性MBR（Protective MBR）：<ul><li><strong>起始LBA地址</strong>：通常为1，表示保护性MBR保护从第一个LBA开始的GPT分区表。</li><li><strong>分区大小</strong>：表示整个磁盘的大小，目的是确保旧的工具看到整个磁盘已经被占用，不会尝试对其进行重新分区。</li></ul></li></ol><p>保护性MBR的结构一般如下：</p><ul><li><strong>字节 0-445</strong>：主引导程序代码（通常是默认的引导代码或留空）</li><li><strong>字节 446-461</strong>：第一个分区条目，表示整个磁盘被GPT保护<ul><li><strong>字节 0</strong>：引导标志（Boot Indicator），通常为0x00</li><li><strong>字节 1-3</strong>：起始CHS地址（通常为0x000200，表示CHS的方式不可用）</li><li><strong>字节 4</strong>：分区类型（Partition Type），为0xEE，表示GPT保护分区</li><li><strong>字节 5-7</strong>：结束CHS地址（通常为0xFFFFFF，表示CHS的方式不可用）</li><li><strong>字节 8-11</strong>：起始LBA地址（Starting LBA Address），通常为1</li><li><strong>字节 12-15</strong>：分区大小（Size in Sectors），表示磁盘的总扇区数减1</li></ul></li><li><strong>字节 462-509</strong>：其余的三个分区条目，通常为空（全部为0）</li><li><strong>字节 510-511</strong>：签名字段（0x55AA）</li></ul><p>因此，MBR中分区类型为0xEE确实用来标识GPT分区，确保与旧系统和工具的兼容性，同时保护GPT结构不被无意覆盖。</p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>stm32mp135_裸机编程</title>
     <link href="/2024/05/22/stm32mp135-%E8%A3%B8%E6%9C%BA%E7%BC%96%E7%A8%8B/"/>
     <url>/2024/05/22/stm32mp135-%E8%A3%B8%E6%9C%BA%E7%BC%96%E7%A8%8B/</url>
@@ -44,7 +57,7 @@
   
   
   <entry>
-    <title>分类</title>
+    <title>tags</title>
     <link href="/"/>
     <url>/</url>
     
@@ -55,7 +68,7 @@
   
   
   <entry>
-    <title>tags</title>
+    <title>分类</title>
     <link href="/"/>
     <url>/</url>
     

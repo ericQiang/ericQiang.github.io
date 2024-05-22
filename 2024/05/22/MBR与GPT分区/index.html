@@ -18,21 +18,21 @@
   <meta name="author" content="强哥">
   <meta name="keywords" content="">
   
-    <meta name="description" content="stm32mp135 裸机编程1.固件编译编译生成的elf文件需要增加一个stm32 header。这个header的添加是使用脚本工具实现的 1..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;Utilities&#x2F;ImageHeader&#x2F;postbuild_STM32MP13.sh  &quot;$&#123;gnu_tools_for_stm32_compiler_path&#125;&quot; &amp;">
+    <meta name="description" content="MBR与GPT分区在调试STM32MP135通过SD启动裸机程序时，ROM引导程序会先检查SD卡是否是GPT分区。故了解了一下。 MBR（Master Boot Record）位于磁盘的第一个扇区，总大小为512字节。下面是这512字节的详细分布及每个字节的含义：  主引导程序（Bootstrap Code）： 字节 0-445： 这446字节的区域用于存放主引导程序代码，负责初始化硬件、定位并加">
 <meta property="og:type" content="article">
-<meta property="og:title" content="stm32mp135_裸机编程">
-<meta property="og:url" content="https://ericqiang.github.io/2024/05/22/stm32mp135-%E8%A3%B8%E6%9C%BA%E7%BC%96%E7%A8%8B/index.html">
+<meta property="og:title" content="MBR与GPT分区">
+<meta property="og:url" content="https://ericqiang.github.io/2024/05/22/MBR%E4%B8%8EGPT%E5%88%86%E5%8C%BA/index.html">
 <meta property="og:site_name" content="强哥的博客">
-<meta property="og:description" content="stm32mp135 裸机编程1.固件编译编译生成的elf文件需要增加一个stm32 header。这个header的添加是使用脚本工具实现的 1..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;Utilities&#x2F;ImageHeader&#x2F;postbuild_STM32MP13.sh  &quot;$&#123;gnu_tools_for_stm32_compiler_path&#125;&quot; &amp;">
+<meta property="og:description" content="MBR与GPT分区在调试STM32MP135通过SD启动裸机程序时，ROM引导程序会先检查SD卡是否是GPT分区。故了解了一下。 MBR（Master Boot Record）位于磁盘的第一个扇区，总大小为512字节。下面是这512字节的详细分布及每个字节的含义：  主引导程序（Bootstrap Code）： 字节 0-445： 这446字节的区域用于存放主引导程序代码，负责初始化硬件、定位并加">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-05-22T03:23:44.000Z">
-<meta property="article:modified_time" content="2024-05-22T06:54:05.129Z">
+<meta property="article:published_time" content="2024-05-22T09:05:28.000Z">
+<meta property="article:modified_time" content="2024-05-22T09:05:47.098Z">
 <meta property="article:author" content="强哥">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>stm32mp135_裸机编程 - 强哥的博客</title>
+  <title>MBR与GPT分区 - 强哥的博客</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -227,7 +227,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="stm32mp135_裸机编程"></span>
+            <span id="subtitle" data-typed-text="MBR与GPT分区"></span>
           
         </div>
 
@@ -238,8 +238,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-05-22 11:23" pubdate>
-          2024年5月22日 上午
+        <time datetime="2024-05-22 17:05" pubdate>
+          2024年5月22日 下午
         </time>
       </span>
     
@@ -251,7 +251,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          文章字数: 723 
+          文章字数: 969 
         
       </span>
     
@@ -263,7 +263,7 @@
         
         
           <!-- compatible with older versions-->
-          阅读全文大概需要 7 分钟
+          阅读全文大概需要 9 分钟
         
       </span>
     
@@ -308,12 +308,12 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">stm32mp135_裸机编程</h1>
+            <h1 id="seo-header">MBR与GPT分区</h1>
             
               <p id="updated-time" class="note note-info" style="display: none">
                 
                   
-                    本文最后更新于 2024-05-22T14:54:05+08:00
+                    本文最后更新于 2024-05-22T17:05:47+08:00
                   
                   
 
@@ -323,45 +323,102 @@
             
               <div class="markdown-body">
                 
-                <h1 id="stm32mp135-裸机编程"><a href="#stm32mp135-裸机编程" class="headerlink" title="stm32mp135 裸机编程"></a>stm32mp135 裸机编程</h1><h2 id="1-固件编译"><a href="#1-固件编译" class="headerlink" title="1.固件编译"></a>1.固件编译</h2><p>编译生成的elf文件需要增加一个stm32 header。这个header的添加是使用脚本工具实现的</p>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/Utilities/</span>ImageHeader/postbuild_STM32MP13.sh  <span class="hljs-string">&quot;$&#123;gnu_tools_for_stm32_compiler_path&#125;&quot;</span> <span class="hljs-string">&quot;$&#123;BuildArtifactFileBaseName&#125;&quot;</span><br></code></pre></td></tr></table></figure>
-
-<p>比如，裸机工程生成的固件为GPIO_EXTI_A7.elf，那么经过上面的命令后，生成的固件名为GPIO_EXTI_A7.stm32</p>
-<h2 id="2-固件烧录"><a href="#2-固件烧录" class="headerlink" title="2.固件烧录"></a>2.固件烧录</h2><h3 id="烧录到spiflash中"><a href="#烧录到spiflash中" class="headerlink" title="烧录到spiflash中"></a>烧录到spiflash中</h3><p>将固件通过cube programmer烧录到spiflash中，烧录的tsv形如以下：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs sql">#Opt Id     Name        Type        IP      <span class="hljs-keyword">Offset</span>      <span class="hljs-type">Binary</span><br><span class="hljs-operator">-</span>	<span class="hljs-number">0x01</span>	fsbl<span class="hljs-operator">-</span>boot	<span class="hljs-type">Binary</span>	<span class="hljs-keyword">none</span>	<span class="hljs-number">0x0</span>	.<span class="hljs-operator">/</span>tf<span class="hljs-operator">-</span>a<span class="hljs-operator">-</span>stm32mp135f<span class="hljs-operator">-</span>dk<span class="hljs-operator">-</span>usb.stm32<br><span class="hljs-operator">-</span>	<span class="hljs-number">0x03</span>	fip<span class="hljs-operator">-</span>boot	FIP	<span class="hljs-keyword">none</span>	<span class="hljs-number">0x0</span>	.<span class="hljs-operator">/</span>fip<span class="hljs-operator">-</span>stm32mp135f<span class="hljs-operator">-</span>dk<span class="hljs-operator">-</span>optee.bin<br>P	<span class="hljs-number">0x04</span>	fsbl1	<span class="hljs-type">Binary</span>	nor0	<span class="hljs-number">0x00000000</span>	.<span class="hljs-operator">/</span>pciem02_fsbl.stm32<br>P	<span class="hljs-number">0x05</span>	fsbl2	<span class="hljs-type">Binary</span>	nor0	<span class="hljs-number">0x00040000</span>	.<span class="hljs-operator">/</span>pciem02_app.stm32<br></code></pre></td></tr></table></figure>
-
-<p>说明：上述0x01和0x03是usb烧录启动固件。0x01先通过cubeprogrammer烧入sysram中并运行（会初始化ddr），然后将0x03（其实是uboot）烧入ddr中，并运行。uboot中会通过usb烧录0x04和0x05分别烧入spiflash的偏移位置0和偏移位置0x00040000处。</p>
-<p>当然，如果在量产阶段，也可以直接烧写spiflash，然后再进行SMT。</p>
-<h3 id="烧录到SD卡中"><a href="#烧录到SD卡中" class="headerlink" title="烧录到SD卡中"></a>烧录到SD卡中</h3><p>在<a target="_blank" rel="noopener" href="https://wiki.st.com/stm32mpu/wiki/STM32_MPU_ROM_code_overview">stm32mp135 wiki</a>中有如下描述：</p>
-<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs livecodeserver"><span class="hljs-number">3.3</span><span class="hljs-number">.3</span> Boot <span class="hljs-built_in">from</span> SD card↑<br>SD cards contain <span class="hljs-literal">two</span> versions <span class="hljs-keyword">of</span> <span class="hljs-keyword">the</span> FSBL. The ROM code tries <span class="hljs-built_in">to</span> <span class="hljs-built_in">load</span> <span class="hljs-keyword">and</span> launch <span class="hljs-keyword">the</span> <span class="hljs-keyword">first</span> copy. In <span class="hljs-keyword">the</span> <span class="hljs-keyword">case</span> <span class="hljs-keyword">of</span> failure, <span class="hljs-keyword">it</span> <span class="hljs-keyword">then</span> tries <span class="hljs-built_in">to</span> <span class="hljs-built_in">load</span> <span class="hljs-keyword">the</span> <span class="hljs-keyword">second</span> copy.<br><br>The ROM code <span class="hljs-keyword">first</span> looks <span class="hljs-keyword">for</span> <span class="hljs-keyword">a</span> GPT. If <span class="hljs-keyword">it</span> finds <span class="hljs-keyword">it</span>, <span class="hljs-keyword">it</span> locates <span class="hljs-literal">two</span> FSBLs <span class="hljs-keyword">by</span> looking <span class="hljs-keyword">for</span> <span class="hljs-keyword">the</span> <span class="hljs-literal">two</span> <span class="hljs-keyword">first</span> GPT entries <span class="hljs-keyword">of</span> which <span class="hljs-keyword">the</span> name <span class="hljs-keyword">begins</span> <span class="hljs-keyword">with</span> <span class="hljs-string">&quot;fsbl&quot;</span>. If <span class="hljs-keyword">it</span> cannot find <span class="hljs-keyword">a</span> GPT, <span class="hljs-keyword">the</span> ROM code looks <span class="hljs-keyword">for</span> FSBL1 <span class="hljs-keyword">at</span> <span class="hljs-built_in">offset</span> LBA128, <span class="hljs-keyword">and</span> FSBL2 <span class="hljs-keyword">at</span> <span class="hljs-built_in">offset</span> LBA640.<br></code></pre></td></tr></table></figure>
-
-<p>上电后，ROM会先查找GPT分区，如果SD卡中有GPT分区，则检查GPT分区的entry name为fsbl开头的（比如fsbl1）。则从该分区读取固件（.stm32格式）到sysram中运行。</p>
-<p>如果SD卡中并没有分区（或者有分区，但分区格式不是GPT（比如MBR）），则从SD卡的逻辑地址LBA128(因为SD卡的sector大小为512，即128*512＝64KB)处读取固件（.stm32格式）到sysram中运行。</p>
-<p>注：wiki中的描述中，还有关于fsbl2的读取。目前我没有用到。</p>
-<h2 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h2><h4 id="linux下烧写固件到SD卡的64KB偏移处。"><a href="#linux下烧写固件到SD卡的64KB偏移处。" class="headerlink" title="linux下烧写固件到SD卡的64KB偏移处。"></a>linux下烧写固件到SD卡的64KB偏移处。</h4><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">dd <span class="hljs-attribute">if</span>=GPIO_EXTI_A7.stm32 <span class="hljs-attribute">of</span>=/dev/sdc <span class="hljs-attribute">bs</span>=512 <span class="hljs-attribute">seek</span>=128<br></code></pre></td></tr></table></figure>
-
-
-
-<h4 id="linux下对SD卡进行分区"><a href="#linux下对SD卡进行分区" class="headerlink" title="linux下对SD卡进行分区"></a>linux下对SD卡进行分区</h4><ol>
-<li><p>分区表设置为GPT（修改会导致分区丢失）</p>
-<figure class="highlight cos"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cos">sudo parted /dev/sdc	<span class="hljs-comment">//会进入parted命令交互界面</span><br><br>(parted) <span class="hljs-keyword">print</span>	<span class="hljs-comment">//在parted交互界面中打印当前分区表</span><br>(parted) mklabel gpt	<span class="hljs-comment">//将分区表格式转换为GPT</span><br>(parted) <span class="hljs-keyword">quit</span>		<span class="hljs-comment">//退出</span><br></code></pre></td></tr></table></figure>
-
-
+                <h1 id="MBR与GPT分区"><a href="#MBR与GPT分区" class="headerlink" title="MBR与GPT分区"></a>MBR与GPT分区</h1><p>在调试STM32MP135通过SD启动裸机程序时，ROM引导程序会先检查SD卡是否是GPT分区。故了解了一下。</p>
+<p><strong>MBR</strong>（Master Boot Record）位于磁盘的第一个扇区，总大小为512字节。下面是这512字节的详细分布及每个字节的含义：</p>
+<ol>
+<li><strong>主引导程序（Bootstrap Code）</strong>：<ul>
+<li>字节 0-445：<ul>
+<li>这446字节的区域用于存放主引导程序代码，负责初始化硬件、定位并加载操作系统的引导程序。（通常是默认的引导代码或留空）</li>
+</ul>
 </li>
-<li><p>重新分区</p>
-<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs less"><span class="hljs-selector-tag">sudo</span> <span class="hljs-selector-tag">fdisk</span> /<span class="hljs-selector-tag">dev</span>/<span class="hljs-selector-tag">sdc</span>	<span class="hljs-comment">//进入fdisk命令交互界面</span><br>分别输入以下命令<br><span class="hljs-selector-tag">d</span>	<span class="hljs-comment">//删除已有分区</span><br><span class="hljs-selector-tag">n</span>	<span class="hljs-comment">//新建分区</span><br><span class="hljs-selector-tag">p</span>	<span class="hljs-comment">//选择主分区</span><br><span class="hljs-number">1</span>	<span class="hljs-comment">//创建第1个分区</span><br>回车 <span class="hljs-comment">//第一个分区起始位置，默认2048处</span><br>+<span class="hljs-number">256</span><span class="hljs-selector-tag">M</span>	<span class="hljs-comment">//第一个分区的大小选择为256MB</span><br><br><span class="hljs-selector-tag">n</span>	<span class="hljs-comment">//新建分区</span><br><span class="hljs-selector-tag">p</span>	<span class="hljs-comment">//选择主分区</span><br><span class="hljs-number">2</span>	<span class="hljs-comment">//创建第2个分区</span><br>回车 <span class="hljs-comment">//第2个分区起始位置，默认2048处</span><br>回车	<span class="hljs-comment">//第2个分区的大小选择为剩余大小</span><br><br><span class="hljs-selector-tag">p</span>	<span class="hljs-comment">//打印当前分区情况</span><br><br><span class="hljs-selector-tag">w</span>	<span class="hljs-comment">//写入分区信息</span><br><br></code></pre></td></tr></table></figure>
+</ul>
 </li>
-<li><p>修改分区名称</p>
-<figure class="highlight q"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs q">sudo apt-<span class="hljs-built_in">get</span> install gdisk	<span class="hljs-comment">//安装gdisk工具</span><br>sudo gdisk /<span class="hljs-built_in">dev</span>/sdc	<span class="hljs-comment">//进入gdisk命令交互界面</span><br><br>输入以下命令：<br>c	<span class="hljs-comment">//修改分区名称</span><br><span class="hljs-number">1</span>	<span class="hljs-comment">//输入分区编号</span><br>fsbl1	<span class="hljs-comment">//输入分区名称</span><br>w	<span class="hljs-comment">//写入分区信息</span><br><br>p	<span class="hljs-comment">//打印当前分区情况，可以看到分区名称已经修改成功</span><br></code></pre></td></tr></table></figure>
-
-
+<li><strong>分区表（Partition Table）</strong>：<ul>
+<li>字节 446-509：<ul>
+<li>共有4个分区条目，每个条目16字节，共64字节。每个分区条目结构如下：<ul>
+<li>字节 0：引导标志（Boot Indicator）<ul>
+<li>0x80 表示活动分区</li>
+<li>0x00 表示非活动分区</li>
+</ul>
 </li>
-<li><p>将GPIO_EXTI_A7.stm32固件烧入fsbl1分区</p>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">dd <span class="hljs-attribute">if</span>=GPIO_EXTI_A7.stm32 <span class="hljs-attribute">of</span>=/dev/sdc1 <span class="hljs-attribute">bs</span>=512<br></code></pre></td></tr></table></figure>
+<li>字节 1-3：起始CHS地址（Starting CHS Address）<ul>
+<li>起始柱面（Cylinder）、磁头（Head）、扇区（Sector）地址，用于兼容性表示分区的起始位置</li>
+</ul>
 </li>
-<li><p>完成（插入SD卡，固件会自动加载并运行）</p>
+<li>字节 4：分区类型（Partition Type）<ul>
+<li>标识分区类型，例如0x07（NTFS），0x0B（FAT32），<strong>0xEE(GPT)</strong></li>
+</ul>
+</li>
+<li>字节 5-7：结束CHS地址（Ending CHS Address）<ul>
+<li>结束柱面、磁头、扇区地址，用于兼容性表示分区的结束位置</li>
+</ul>
+</li>
+<li>字节 8-11：起始LBA地址（Starting LBA Address）<ul>
+<li>使用逻辑块地址（LBA）表示分区的起始位置</li>
+</ul>
+</li>
+<li>字节 12-15：分区大小（Size in Sectors）<ul>
+<li>分区的总扇区数</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>签名字段（Signature Field）</strong>：<ul>
+<li>字节 510-511：<ul>
+<li>固定值0x55AA，表示这是一个有效的MBR。如果这个签名不正确，系统通常会认为MBR损坏，无法正常引导。</li>
+</ul>
+</li>
+</ul>
 </li>
 </ol>
+<p>总结一下MBR的512字节详细结构：</p>
+<ul>
+<li><strong>字节 0-445</strong>：主引导程序代码（Bootstrap Code）</li>
+<li><strong>字节 446-461</strong>：分区1的分区表条目</li>
+<li><strong>字节 462-477</strong>：分区2的分区表条目</li>
+<li><strong>字节 478-493</strong>：分区3的分区表条目</li>
+<li><strong>字节 494-509</strong>：分区4的分区表条目</li>
+<li><strong>字节 510-511</strong>：签名字段（0x55AA）</li>
+</ul>
+<p>具体来说，每个分区条目16字节的结构如下：</p>
+<ul>
+<li><strong>字节 0</strong>：引导标志（Boot Indicator）</li>
+<li><strong>字节 1-3</strong>：起始CHS地址（Starting CHS Address）</li>
+<li><strong>字节 4</strong>：分区类型（Partition Type）</li>
+<li><strong>字节 5-7</strong>：结束CHS地址（Ending CHS Address）</li>
+<li><strong>字节 8-11</strong>：起始LBA地址（Starting LBA Address）</li>
+<li><strong>字节 12-15</strong>：分区大小（Size in Sectors）</li>
+</ul>
+<p>这些信息共同构成了MBR，帮助计算机识别和加载硬盘上的分区及其内容。</p>
+<p>如果MBR分区表中的字节4（分区类型）为0xEE，这表示该分区是一个保护性MBR（Protective MBR），用于标识GPT（GUID Partition Table）分区。这是为了兼容旧系统和工具，它们可能无法识别GPT分区，但仍能够检测到磁盘的存在并避免破坏GPT分区表。</p>
+<p>当MBR的分区类型为0xEE时，具体情况如下：</p>
+<ol>
+<li>保护性MBR（Protective MBR）：<ul>
+<li><strong>起始LBA地址</strong>：通常为1，表示保护性MBR保护从第一个LBA开始的GPT分区表。</li>
+<li><strong>分区大小</strong>：表示整个磁盘的大小，目的是确保旧的工具看到整个磁盘已经被占用，不会尝试对其进行重新分区。</li>
+</ul>
+</li>
+</ol>
+<p>保护性MBR的结构一般如下：</p>
+<ul>
+<li><strong>字节 0-445</strong>：主引导程序代码（通常是默认的引导代码或留空）</li>
+<li><strong>字节 446-461</strong>：第一个分区条目，表示整个磁盘被GPT保护<ul>
+<li><strong>字节 0</strong>：引导标志（Boot Indicator），通常为0x00</li>
+<li><strong>字节 1-3</strong>：起始CHS地址（通常为0x000200，表示CHS的方式不可用）</li>
+<li><strong>字节 4</strong>：分区类型（Partition Type），为0xEE，表示GPT保护分区</li>
+<li><strong>字节 5-7</strong>：结束CHS地址（通常为0xFFFFFF，表示CHS的方式不可用）</li>
+<li><strong>字节 8-11</strong>：起始LBA地址（Starting LBA Address），通常为1</li>
+<li><strong>字节 12-15</strong>：分区大小（Size in Sectors），表示磁盘的总扇区数减1</li>
+</ul>
+</li>
+<li><strong>字节 462-509</strong>：其余的三个分区条目，通常为空（全部为0）</li>
+<li><strong>字节 510-511</strong>：签名字段（0x55AA）</li>
+</ul>
+<p>因此，MBR中分区类型为0xEE确实用来标识GPT分区，确保与旧系统和工具的兼容性，同时保护GPT结构不被无意覆盖。</p>
 
                 
               </div>
@@ -379,8 +436,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>stm32mp135_裸机编程</div>
-      <div>https://ericqiang.github.io/2024/05/22/stm32mp135-裸机编程/</div>
+      <div>MBR与GPT分区</div>
+      <div>https://ericqiang.github.io/2024/05/22/MBR与GPT分区/</div>
     </div>
     <div class="license-meta">
       
@@ -435,18 +492,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/05/22/MBR%E4%B8%8EGPT%E5%88%86%E5%8C%BA/" title="MBR与GPT分区">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">MBR与GPT分区</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/01/13/%E5%B0%8F%E5%BC%BA%E5%AD%A6Python-OpenCV%E4%B9%8B%EF%BC%8D1-0%E5%BC%80%E7%AF%87/" title="小强学Python+OpenCV之－1.0开篇">
-                        <span class="hidden-mobile">小强学Python+OpenCV之－1.0开篇</span>
+                      <a href="/2024/05/22/stm32mp135-%E8%A3%B8%E6%9C%BA%E7%BC%96%E7%A8%8B/" title="stm32mp135_裸机编程">
+                        <span class="hidden-mobile">stm32mp135_裸机编程</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
