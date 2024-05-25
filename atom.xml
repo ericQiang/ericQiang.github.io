@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>强哥的博客</title>
+  <icon>https://ericqiang.github.io/images/favicon_200x200.png</icon>
+  <subtitle>一个严重的知识焦虑者，忙碌的coder</subtitle>
+  <link href="https://ericqiang.github.io/atom.xml" rel="self"/>
+  
+  <link href="https://ericqiang.github.io/"/>
+  <updated>2024-05-25T03:40:20.076Z</updated>
+  <id>https://ericqiang.github.io/</id>
+  
+  <author>
+    <name>强哥</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>高中数学-3初等函数</title>
+    <link href="https://ericqiang.github.io/2024/05/25/%E9%AB%98%E4%B8%AD%E6%95%B0%E5%AD%A6-3%E5%88%9D%E7%AD%89%E5%87%BD%E6%95%B0/"/>
+    <id>https://ericqiang.github.io/2024/05/25/%E9%AB%98%E4%B8%AD%E6%95%B0%E5%AD%A6-3%E5%88%9D%E7%AD%89%E5%87%BD%E6%95%B0/</id>
+    <published>2024-05-25T03:40:20.000Z</published>
+    <updated>2024-05-25T03:40:20.076Z</updated>
+    
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>高中数学-2函数</title>
+    <link href="https://ericqiang.github.io/2024/05/25/%E9%AB%98%E4%B8%AD%E6%95%B0%E5%AD%A6-2%E5%87%BD%E6%95%B0/"/>
+    <id>https://ericqiang.github.io/2024/05/25/%E9%AB%98%E4%B8%AD%E6%95%B0%E5%AD%A6-2%E5%87%BD%E6%95%B0/</id>
+    <published>2024-05-25T02:59:03.000Z</published>
+    <updated>2024-05-25T05:58:09.927Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;新教材提前内容&quot;&gt;新教材提前内容&lt;/h1&gt;
+&lt;h1
+id=&quot;新教材提前内容充分条件与必要条件&quot;&gt;[新教材提前内容]充分条件与必要条件&lt;/h1&gt;
+&lt;p&gt;&lt;span class=&quot;math display&quot;&gt;&#92;[
+p&#92;Rightarrow</summary>
+        
+      
+    
+    
+    
+    <category term="高中数学(－数儿)笔记" scheme="https://ericqiang.github.io/categories/%E9%AB%98%E4%B8%AD%E6%95%B0%E5%AD%A6-%EF%BC%8D%E6%95%B0%E5%84%BF-%E7%AC%94%E8%AE%B0/"/>
+    
+    
+    <category term="数学" scheme="https://ericqiang.github.io/tags/%E6%95%B0%E5%AD%A6/"/>
+    
+    <category term="高考" scheme="https://ericqiang.github.io/tags/%E9%AB%98%E8%80%83/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>高中数学-1初高衔接</title>
+    <link href="https://ericqiang.github.io/2024/05/25/%E9%AB%98%E4%B8%AD%E6%95%B0%E5%AD%A6-1%E5%88%9D%E9%AB%98%E8%A1%94%E6%8E%A5/"/>
+    <id>https://ericqiang.github.io/2024/05/25/%E9%AB%98%E4%B8%AD%E6%95%B0%E5%AD%A6-1%E5%88%9D%E9%AB%98%E8%A1%94%E6%8E%A5/</id>
+    <published>2024-05-25T02:09:29.000Z</published>
+    <updated>2024-05-25T02:46:20.198Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;初高衔接-1初高中衔接（十字相乘法-二次函数-方程-不等式）&quot;&gt;&lt;a href=&quot;#初高衔接-1初高中衔接（十字相乘法-二次函数-方程-不等式）&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="高中数学(－数儿)笔记" scheme="https://ericqiang.github.io/categories/%E9%AB%98%E4%B8%AD%E6%95%B0%E5%AD%A6-%EF%BC%8D%E6%95%B0%E5%84%BF-%E7%AC%94%E8%AE%B0/"/>
+    
+    
+    <category term="数学" scheme="https://ericqiang.github.io/tags/%E6%95%B0%E5%AD%A6/"/>
+    
+    <category term="高考" scheme="https://ericqiang.github.io/tags/%E9%AB%98%E8%80%83/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>MBR与GPT分区</title>
+    <link href="https://ericqiang.github.io/2024/05/22/MBR%E4%B8%8EGPT%E5%88%86%E5%8C%BA/"/>
+    <id>https://ericqiang.github.io/2024/05/22/MBR%E4%B8%8EGPT%E5%88%86%E5%8C%BA/</id>
+    <published>2024-05-22T09:05:28.000Z</published>
+    <updated>2024-05-22T10:28:14.392Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;MBR与GPT分区&quot;&gt;&lt;a href=&quot;#MBR与GPT分区&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    
+    <category term="linux" scheme="https://ericqiang.github.io/tags/linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>stm32mp135_裸机编程</title>
+    <link href="https://ericqiang.github.io/2024/05/22/stm32mp135-%E8%A3%B8%E6%9C%BA%E7%BC%96%E7%A8%8B/"/>
+    <id>https://ericqiang.github.io/2024/05/22/stm32mp135-%E8%A3%B8%E6%9C%BA%E7%BC%96%E7%A8%8B/</id>
+    <published>2024-05-22T03:23:44.000Z</published>
+    <updated>2024-05-22T10:28:07.848Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;stm32mp135-裸机编程&quot;&gt;&lt;a href=&quot;#stm32mp135-裸机编程&quot; class=&quot;headerlink&quot; title=&quot;stm32mp135 裸机编程&quot;&gt;&lt;/a&gt;stm32mp135 裸机编程&lt;/h1&gt;&lt;h2 id=&quot;1-固件编译&quot;&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    
+    <category term="stm32" scheme="https://ericqiang.github.io/tags/stm32/"/>
+    
+    <category term="baremetal" scheme="https://ericqiang.github.io/tags/baremetal/"/>
+    
+    <category term="mpu" scheme="https://ericqiang.github.io/tags/mpu/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>小强学Python+OpenCV之－1.0开篇</title>
+    <link href="https://ericqiang.github.io/2024/01/13/%E5%B0%8F%E5%BC%BA%E5%AD%A6Python-OpenCV%E4%B9%8B%EF%BC%8D1-0%E5%BC%80%E7%AF%87/"/>
+    <id>https://ericqiang.github.io/2024/01/13/%E5%B0%8F%E5%BC%BA%E5%AD%A6Python-OpenCV%E4%B9%8B%EF%BC%8D1-0%E5%BC%80%E7%AF%87/</id>
+    <published>2024-01-13T09:38:33.000Z</published>
+    <updated>2024-05-22T10:38:07.367Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;小强学Python-OpenCV之－1-0开篇&quot;&gt;&lt;a href=&quot;#小强学Python-OpenCV之－1-0开篇&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="小强学Python+OpenCV" scheme="https://ericqiang.github.io/categories/%E5%B0%8F%E5%BC%BA%E5%AD%A6Python-OpenCV/"/>
+    
+    
+    <category term="Python" scheme="https://ericqiang.github.io/tags/Python/"/>
+    
+    <category term="OpenCV" scheme="https://ericqiang.github.io/tags/OpenCV/"/>
+    
+    <category term="教程" scheme="https://ericqiang.github.io/tags/%E6%95%99%E7%A8%8B/"/>
+    
+  </entry>
+  
+</feed>
