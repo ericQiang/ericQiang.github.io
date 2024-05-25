@@ -19,12 +19,12 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"ericqiang.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="stm32mp135 裸机编程1.固件编译编译生成的elf文件需要增加一个stm32 header。这个header的添加是使用脚本工具实现的 1..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;Utilities&#x2F;ImageHeader&#x2F;postbuild_STM32MP13.sh  &quot;$&#123;gnu_tools_for_stm32_compiler_path&#125;&quot; &amp;">
+    <meta name="description" content="stm32mp135 裸机编程 1.固件编译 编译生成的elf文件需要增加一个stm32 header。这个header的添加是使用脚本工具实现的 1..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;Utilities&#x2F;ImageHeader&#x2F;postbuild_STM32MP13.sh  &quot;$&#123;gnu_tools_for_stm32_compiler_path&#125;&amp;q">
 <meta property="og:type" content="article">
 <meta property="og:title" content="stm32mp135_裸机编程">
 <meta property="og:url" content="https://ericqiang.github.io/2024/05/22/stm32mp135-%E8%A3%B8%E6%9C%BA%E7%BC%96%E7%A8%8B/index.html">
 <meta property="og:site_name" content="强哥的博客">
-<meta property="og:description" content="stm32mp135 裸机编程1.固件编译编译生成的elf文件需要增加一个stm32 header。这个header的添加是使用脚本工具实现的 1..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;Utilities&#x2F;ImageHeader&#x2F;postbuild_STM32MP13.sh  &quot;$&#123;gnu_tools_for_stm32_compiler_path&#125;&quot; &amp;">
+<meta property="og:description" content="stm32mp135 裸机编程 1.固件编译 编译生成的elf文件需要增加一个stm32 header。这个header的添加是使用脚本工具实现的 1..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;Utilities&#x2F;ImageHeader&#x2F;postbuild_STM32MP13.sh  &quot;$&#123;gnu_tools_for_stm32_compiler_path&#125;&amp;q">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-05-22T03:23:44.000Z">
 <meta property="article:modified_time" content="2024-05-22T10:28:07.848Z">
@@ -111,7 +111,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#stm32mp135-%E8%A3%B8%E6%9C%BA%E7%BC%96%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">stm32mp135 裸机编程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%9B%BA%E4%BB%B6%E7%BC%96%E8%AF%91"><span class="nav-number">1.1.</span> <span class="nav-text">1.固件编译</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%9B%BA%E4%BB%B6%E7%83%A7%E5%BD%95"><span class="nav-number">1.2.</span> <span class="nav-text">2.固件烧录</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%83%A7%E5%BD%95%E5%88%B0spiflash%E4%B8%AD"><span class="nav-number">1.2.1.</span> <span class="nav-text">烧录到spiflash中</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%83%A7%E5%BD%95%E5%88%B0SD%E5%8D%A1%E4%B8%AD"><span class="nav-number">1.2.2.</span> <span class="nav-text">烧录到SD卡中</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E5%AE%83"><span class="nav-number">1.3.</span> <span class="nav-text">其它</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#linux%E4%B8%8B%E7%83%A7%E5%86%99%E5%9B%BA%E4%BB%B6%E5%88%B0SD%E5%8D%A1%E7%9A%8464KB%E5%81%8F%E7%A7%BB%E5%A4%84%E3%80%82"><span class="nav-number">1.3.0.1.</span> <span class="nav-text">linux下烧写固件到SD卡的64KB偏移处。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#linux%E4%B8%8B%E5%AF%B9SD%E5%8D%A1%E8%BF%9B%E8%A1%8C%E5%88%86%E5%8C%BA"><span class="nav-number">1.3.0.2.</span> <span class="nav-text">linux下对SD卡进行分区</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#stm32mp135-%E8%A3%B8%E6%9C%BA%E7%BC%96%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">stm32mp135 裸机编程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%BA%E4%BB%B6%E7%BC%96%E8%AF%91"><span class="nav-number">1.1.</span> <span class="nav-text">1.固件编译</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%BA%E4%BB%B6%E7%83%A7%E5%BD%95"><span class="nav-number">1.2.</span> <span class="nav-text">2.固件烧录</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%83%A7%E5%BD%95%E5%88%B0spiflash%E4%B8%AD"><span class="nav-number">1.2.1.</span> <span class="nav-text">烧录到spiflash中</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%83%A7%E5%BD%95%E5%88%B0sd%E5%8D%A1%E4%B8%AD"><span class="nav-number">1.2.2.</span> <span class="nav-text">烧录到SD卡中</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E5%AE%83"><span class="nav-number">1.3.</span> <span class="nav-text">其它</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#linux%E4%B8%8B%E7%83%A7%E5%86%99%E5%9B%BA%E4%BB%B6%E5%88%B0sd%E5%8D%A1%E7%9A%8464kb%E5%81%8F%E7%A7%BB%E5%A4%84"><span class="nav-number">1.3.0.1.</span> <span class="nav-text">linux下烧写固件到SD卡的64KB偏移处。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#linux%E4%B8%8B%E5%AF%B9sd%E5%8D%A1%E8%BF%9B%E8%A1%8C%E5%88%86%E5%8C%BA"><span class="nav-number">1.3.0.2.</span> <span class="nav-text">linux下对SD卡进行分区</span></a></li></ol></li></ol></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -209,44 +209,42 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1 id="stm32mp135-裸机编程"><a href="#stm32mp135-裸机编程" class="headerlink" title="stm32mp135 裸机编程"></a>stm32mp135 裸机编程</h1><h2 id="1-固件编译"><a href="#1-固件编译" class="headerlink" title="1.固件编译"></a>1.固件编译</h2><p>编译生成的elf文件需要增加一个stm32 header。这个header的添加是使用脚本工具实现的</p>
+    <div class="post-body" itemprop="articleBody"><h1 id="stm32mp135-裸机编程">stm32mp135 裸机编程</h1>
+<h2 id="固件编译">1.固件编译</h2>
+<p>编译生成的elf文件需要增加一个stm32
+header。这个header的添加是使用脚本工具实现的</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">../../../../../../../Utilities/ImageHeader/postbuild_STM32MP13.sh  &quot;$&#123;gnu_tools_for_stm32_compiler_path&#125;&quot; &quot;$&#123;BuildArtifactFileBaseName&#125;&quot;</span><br></pre></td></tr></table></figure>
-
 <p>比如，裸机工程生成的固件为GPIO_EXTI_A7.elf，那么经过上面的命令后，生成的固件名为GPIO_EXTI_A7.stm32</p>
-<h2 id="2-固件烧录"><a href="#2-固件烧录" class="headerlink" title="2.固件烧录"></a>2.固件烧录</h2><h3 id="烧录到spiflash中"><a href="#烧录到spiflash中" class="headerlink" title="烧录到spiflash中"></a>烧录到spiflash中</h3><p>将固件通过cube programmer烧录到spiflash中，烧录的tsv形如以下：</p>
+<h2 id="固件烧录">2.固件烧录</h2>
+<h3 id="烧录到spiflash中">烧录到spiflash中</h3>
+<p>将固件通过cube programmer烧录到spiflash中，烧录的tsv形如以下：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#Opt Id     Name        Type        IP      Offset      Binary</span><br><span class="line">-	0x01	fsbl-boot	Binary	none	0x0	./tf-a-stm32mp135f-dk-usb.stm32</span><br><span class="line">-	0x03	fip-boot	FIP	none	0x0	./fip-stm32mp135f-dk-optee.bin</span><br><span class="line">P	0x04	fsbl1	Binary	nor0	0x00000000	./pciem02_fsbl.stm32</span><br><span class="line">P	0x05	fsbl2	Binary	nor0	0x00040000	./pciem02_app.stm32</span><br></pre></td></tr></table></figure>
-
 <p>说明：上述0x01和0x03是usb烧录启动固件。0x01先通过cubeprogrammer烧入sysram中并运行（会初始化ddr），然后将0x03（其实是uboot）烧入ddr中，并运行。uboot中会通过usb烧录0x04和0x05分别烧入spiflash的偏移位置0和偏移位置0x00040000处。</p>
 <p>当然，如果在量产阶段，也可以直接烧写spiflash，然后再进行SMT。</p>
-<h3 id="烧录到SD卡中"><a href="#烧录到SD卡中" class="headerlink" title="烧录到SD卡中"></a>烧录到SD卡中</h3><p>在<a target="_blank" rel="noopener" href="https://wiki.st.com/stm32mpu/wiki/STM32_MPU_ROM_code_overview">stm32mp135 wiki</a>中有如下描述：</p>
+<h3 id="烧录到sd卡中">烧录到SD卡中</h3>
+<p>在<a
+target="_blank" rel="noopener" href="https://wiki.st.com/stm32mpu/wiki/STM32_MPU_ROM_code_overview">stm32mp135
+wiki</a>中有如下描述：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">3.3.3 Boot from SD card↑</span><br><span class="line">SD cards contain two versions of the FSBL. The ROM code tries to load and launch the first copy. In the case of failure, it then tries to load the second copy.</span><br><span class="line"></span><br><span class="line">The ROM code first looks for a GPT. If it finds it, it locates two FSBLs by looking for the two first GPT entries of which the name begins with &quot;fsbl&quot;. If it cannot find a GPT, the ROM code looks for FSBL1 at offset LBA128, and FSBL2 at offset LBA640.</span><br></pre></td></tr></table></figure>
-
-<p>上电后，ROM会先查找GPT分区，如果SD卡中有GPT分区，则检查GPT分区的entry name为fsbl开头的（比如fsbl1）。则从该分区读取固件（.stm32格式）到sysram中运行。</p>
+<p>上电后，ROM会先查找GPT分区，如果SD卡中有GPT分区，则检查GPT分区的entry
+name为fsbl开头的（比如fsbl1）。则从该分区读取固件（.stm32格式）到sysram中运行。</p>
 <p>如果SD卡中并没有分区（或者有分区，但分区格式不是GPT（比如MBR）），则从SD卡的逻辑地址LBA128(因为SD卡的sector大小为512，即128*512＝64KB)处读取固件（.stm32格式）到sysram中运行。</p>
 <p>注：wiki中的描述中，还有关于fsbl2的读取。目前我没有用到。</p>
-<h2 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h2><h4 id="linux下烧写固件到SD卡的64KB偏移处。"><a href="#linux下烧写固件到SD卡的64KB偏移处。" class="headerlink" title="linux下烧写固件到SD卡的64KB偏移处。"></a>linux下烧写固件到SD卡的64KB偏移处。</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dd if=GPIO_EXTI_A7.stm32 of=/dev/sdc bs=512 seek=128</span><br></pre></td></tr></table></figure>
-
-
-
-<h4 id="linux下对SD卡进行分区"><a href="#linux下对SD卡进行分区" class="headerlink" title="linux下对SD卡进行分区"></a>linux下对SD卡进行分区</h4><ol>
+<h2 id="其它">其它</h2>
+<h4
+id="linux下烧写固件到sd卡的64kb偏移处">linux下烧写固件到SD卡的64KB偏移处。</h4>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dd if=GPIO_EXTI_A7.stm32 of=/dev/sdc bs=512 seek=128</span><br></pre></td></tr></table></figure>
+<h4 id="linux下对sd卡进行分区">linux下对SD卡进行分区</h4>
+<ol type="1">
 <li><p>分区表设置为GPT（修改会导致分区丢失）</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo parted /dev/sdc	//会进入parted命令交互界面</span><br><span class="line"></span><br><span class="line">(parted) print	//在parted交互界面中打印当前分区表</span><br><span class="line">(parted) mklabel gpt	//将分区表格式转换为GPT</span><br><span class="line">(parted) quit		//退出</span><br></pre></td></tr></table></figure>
-
-
-</li>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo parted /dev/sdc	//会进入parted命令交互界面</span><br><span class="line"></span><br><span class="line">(parted) print	//在parted交互界面中打印当前分区表</span><br><span class="line">(parted) mklabel gpt	//将分区表格式转换为GPT</span><br><span class="line">(parted) quit		//退出</span><br></pre></td></tr></table></figure></li>
 <li><p>重新分区</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">sudo fdisk /dev/sdc	//进入fdisk命令交互界面</span><br><span class="line">分别输入以下命令</span><br><span class="line">d	//删除已有分区</span><br><span class="line">n	//新建分区</span><br><span class="line">p	//选择主分区</span><br><span class="line">1	//创建第1个分区</span><br><span class="line">回车 //第一个分区起始位置，默认2048处</span><br><span class="line">+256M	//第一个分区的大小选择为256MB</span><br><span class="line"></span><br><span class="line">n	//新建分区</span><br><span class="line">p	//选择主分区</span><br><span class="line">2	//创建第2个分区</span><br><span class="line">回车 //第2个分区起始位置，默认2048处</span><br><span class="line">回车	//第2个分区的大小选择为剩余大小</span><br><span class="line"></span><br><span class="line">p	//打印当前分区情况</span><br><span class="line"></span><br><span class="line">w	//写入分区信息</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-</li>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">sudo fdisk /dev/sdc	//进入fdisk命令交互界面</span><br><span class="line">分别输入以下命令</span><br><span class="line">d	//删除已有分区</span><br><span class="line">n	//新建分区</span><br><span class="line">p	//选择主分区</span><br><span class="line">1	//创建第1个分区</span><br><span class="line">回车 //第一个分区起始位置，默认2048处</span><br><span class="line">+256M	//第一个分区的大小选择为256MB</span><br><span class="line"></span><br><span class="line">n	//新建分区</span><br><span class="line">p	//选择主分区</span><br><span class="line">2	//创建第2个分区</span><br><span class="line">回车 //第2个分区起始位置，默认2048处</span><br><span class="line">回车	//第2个分区的大小选择为剩余大小</span><br><span class="line"></span><br><span class="line">p	//打印当前分区情况</span><br><span class="line"></span><br><span class="line">w	//写入分区信息</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
 <li><p>修改分区名称</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install gdisk	//安装gdisk工具</span><br><span class="line">sudo gdisk /dev/sdc	//进入gdisk命令交互界面</span><br><span class="line"></span><br><span class="line">输入以下命令：</span><br><span class="line">c	//修改分区名称</span><br><span class="line">1	//输入分区编号</span><br><span class="line">fsbl1	//输入分区名称</span><br><span class="line">w	//写入分区信息</span><br><span class="line"></span><br><span class="line">p	//打印当前分区情况，可以看到分区名称已经修改成功</span><br></pre></td></tr></table></figure>
-
-
-</li>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install gdisk	//安装gdisk工具</span><br><span class="line">sudo gdisk /dev/sdc	//进入gdisk命令交互界面</span><br><span class="line"></span><br><span class="line">输入以下命令：</span><br><span class="line">c	//修改分区名称</span><br><span class="line">1	//输入分区编号</span><br><span class="line">fsbl1	//输入分区名称</span><br><span class="line">w	//写入分区信息</span><br><span class="line"></span><br><span class="line">p	//打印当前分区情况，可以看到分区名称已经修改成功</span><br></pre></td></tr></table></figure></li>
 <li><p>将GPIO_EXTI_A7.stm32固件烧入fsbl1分区</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dd if=GPIO_EXTI_A7.stm32 of=/dev/sdc1 bs=512</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>完成（插入SD卡，固件会自动加载并运行）</p>
-</li>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dd if=GPIO_EXTI_A7.stm32 of=/dev/sdc1 bs=512</span><br></pre></td></tr></table></figure></li>
+<li><p>完成（插入SD卡，固件会自动加载并运行）</p></li>
 </ol>
 
     </div>

@@ -24,6 +24,15 @@
     <updated>2024-05-25T03:40:20.076Z</updated>
     
     
+      
+      
+        
+        
+    <summary type="html">
+</summary>
+        
+      
+    
     
     
     
@@ -72,7 +81,10 @@ p&#92;Rightarrow</summary>
       
         
         
-    <summary type="html">&lt;h1 id=&quot;初高衔接-1初高中衔接（十字相乘法-二次函数-方程-不等式）&quot;&gt;&lt;a href=&quot;#初高衔接-1初高中衔接（十字相乘法-二次函数-方程-不等式）&quot; class=&quot;headerlink&quot;</summary>
+    <summary type="html">&lt;h1
+id=&quot;初高衔接1初高中衔接十字相乘法二次函数方程不等式&quot;&gt;[初高衔接]1初高中衔接（十字相乘法,二次函数,方程,不等式）&lt;/h1&gt;
+&lt;h3 id=&quot;十字相乘法&quot;&gt;十字相乘法&lt;/h3&gt;
+&lt;p&gt;&lt;span class=&quot;math</summary>
         
       
     
@@ -99,7 +111,9 @@ p&#92;Rightarrow</summary>
       
         
         
-    <summary type="html">&lt;h1 id=&quot;MBR与GPT分区&quot;&gt;&lt;a href=&quot;#MBR与GPT分区&quot; class=&quot;headerlink&quot;</summary>
+    <summary type="html">&lt;h1 id=&quot;mbr与gpt分区&quot;&gt;MBR与GPT分区&lt;/h1&gt;
+&lt;p&gt;在调试STM32MP135通过SD启动裸机程序时，ROM引导程序会先检查SD卡是否是GPT分区。故了解了一下。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;MBR&lt;/strong&gt;（Master</summary>
         
       
     
@@ -122,7 +136,8 @@ p&#92;Rightarrow</summary>
       
         
         
-    <summary type="html">&lt;h1 id=&quot;stm32mp135-裸机编程&quot;&gt;&lt;a href=&quot;#stm32mp135-裸机编程&quot; class=&quot;headerlink&quot; title=&quot;stm32mp135 裸机编程&quot;&gt;&lt;/a&gt;stm32mp135 裸机编程&lt;/h1&gt;&lt;h2 id=&quot;1-固件编译&quot;&gt;&lt;a</summary>
+    <summary type="html">&lt;h1 id=&quot;stm32mp135-裸机编程&quot;&gt;stm32mp135 裸机编程&lt;/h1&gt;
+&lt;h2</summary>
         
       
     
@@ -149,7 +164,9 @@ p&#92;Rightarrow</summary>
       
         
         
-    <summary type="html">&lt;h1 id=&quot;小强学Python-OpenCV之－1-0开篇&quot;&gt;&lt;a href=&quot;#小强学Python-OpenCV之－1-0开篇&quot; class=&quot;headerlink&quot;</summary>
+    <summary type="html">&lt;h1 id=&quot;小强学pythonopencv之1.0开篇&quot;&gt;小强学Python+OpenCV之－1.0开篇&lt;/h1&gt;
+&lt;h2 id=&quot;写在前面&quot;&gt;写在前面：&lt;/h2&gt;
+&lt;p&gt;有没有想过使用Python + OpenCV来实现人脸识别？</summary>
         
       
     
